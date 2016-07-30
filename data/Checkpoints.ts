@@ -1,14 +1,12 @@
-var d3 = require('d3');
-var c3 = require('c3');
-var $ = require('jquery');
-var nj = require('numjs');
+import * as $ from 'jquery';
 
-module.exports = {loadCheckpoints, getSortedCheckpoints, getGroupedCheckpoints};
-function loadCheckpoints(callback){
+// export type Checkpoint = {
+//   epoch: number,
+//   stats: [],
+// }
+export function loadCheckpoints(callback){
   // start data get
-  d3.json("http://localhost:8080/checkpoints", function(error, json){
-    if (error) callback(console.warn(error));
-
+  $.get("http://localhost:8080/checkpoints", function(json){
     let masterData = [];
     let legendNames = [];
     for(let checkpointInd = 0; checkpointInd < json.length; checkpointInd++){
@@ -31,16 +29,14 @@ function loadCheckpoints(callback){
   });
 }
 
-function getSortedCheckpoints(callback){
+export function getSortedCheckpoints(callback){
   // start data get
-  d3.json("http://localhost:8080/checkpoints", function(error, json){
-    if (error) callback(console.warn(error));
-
+  $.get("http://localhost:8080/checkpoints", function(json){
     callback(json.sort(checkpointCmp));
   });
 }
 
-function getGroupedCheckpoints(callback){
+export function getGroupedCheckpoints(callback: (checkpoints: any[]) => void){
   getSortedCheckpoints(_getGroupedCheckpoints(callback));
 }
 

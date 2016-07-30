@@ -1,13 +1,12 @@
-var React = require('react');
-var Checkpoints = require('./data/checkpoints');
-var c3 = require('c3');
+import * as React from 'react';
+import * as Checkpoints from '../data/Checkpoints';
+import * as c3 from 'c3';
 
-var ParameterChart = React.createClass({
-  parameterChart: null,
-
+export default class ParameterChart extends React.Component<{}, {}> {
+  parameterChart: c3.ChartApi;
   componentDidMount(){
     Checkpoints.loadCheckpoints(this.loadParms);
-  },
+  }
   loadParms(data, legendNames){
     this.parameterChart.load({
         json: data,
@@ -16,9 +15,9 @@ var ParameterChart = React.createClass({
             value: legendNames,
         }
     });
-  },
+  }
   generateChart(node){
-    var chart = c3.generate({
+    let chart = c3.generate({
             bindto: node,
             data: {
                 json: [],
@@ -29,8 +28,8 @@ var ParameterChart = React.createClass({
             },
         });
     return chart;
-  },
-  render: function(){
+  }
+  render(){
     return(
       <div>
         <div ref={
@@ -41,6 +40,4 @@ var ParameterChart = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = ParameterChart;
+}

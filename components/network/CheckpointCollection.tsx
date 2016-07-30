@@ -1,15 +1,18 @@
-var React = require('react');
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
+import * as React from 'react';
+import {List, ListItem} from 'material-ui/List';
 
-var CheckpointCollection = React.createClass({
+type Props = {
+  onClick: (checkpoint: any) => void,
+  checkpointCollection: any[]
+};
+export default class CheckpointCollection extends React.Component<Props, {}> {
   buildClickFn(checkpoint){
     return () => {this.props.onClick(checkpoint)};
-  },
-  render: function(){
+  }
+  render(){
     return(
       <List className="grey lighten-4">
-        {this.props.checkpointCollection.map(function(checkpoint, i){
+        {this.props.checkpointCollection.map((checkpoint, i) => {
           return(
             <ListItem
               key={i}
@@ -17,10 +20,8 @@ var CheckpointCollection = React.createClass({
               onClick={this.buildClickFn(checkpoint)}
             />
           );
-        }.bind(this))}
+        })}
       </List>
     );
   }
-});
-
-module.exports = CheckpointCollection;
+}

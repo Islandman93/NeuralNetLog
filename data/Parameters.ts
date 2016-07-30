@@ -1,21 +1,18 @@
-var d3 = require('d3');
-var c3 = require('c3');
-var $ = require('jquery');
-var nj = require('numjs');
+import * as $ from 'jquery';
+import * as nj from 'numjs';
+import * as c3 from 'c3';
 
-module.exports = {getList, getParm, generateChart};
-function getList(callback){
+export type ParameterList = string[];
+export function getList(callback: (parameterList: ParameterList) => void){
   // start data get
-  $.get("http://localhost:8080/parms/getlist", function(data){
-    let dataList = JSON.parse(data);
-    callback(dataList);
+  $.get("http://localhost:8080/parms/getlist", function(data: ParameterList){
+    callback(data);
   });
 }
 
-function getParm(parmName, callback){
-  d3.json("http://localhost:8080/parms/getparm/"+parmName, function(error, json){
-    if (error) callback(console.warn(error));
-
+export type ParameterType = {name: string, values: any}[];
+export function getParm(parmName: string, callback: (layers: ParameterType) => void){
+  $.get("http://localhost:8080/parms/getparm/"+parmName, function(json){
     // loop over weight / biases
     let layers = [];
     let layerInd = 0;
@@ -36,8 +33,8 @@ function getParm(parmName, callback){
   });
 }
 
-function generateChart(node){
-    var chart = c3.generate({
+export function generateChart(node): c3.ChartAPI{
+    let chart = c3.generate({
             bindto: node,
             data: {
                 columns: [],

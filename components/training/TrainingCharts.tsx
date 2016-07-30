@@ -1,29 +1,29 @@
-var React = require('react');
-var helper = require('./traininghelper');
+import * as React from 'react';
+import * as helper from '../../data/Training';
 
-var TrainingChart = React.createClass({
-  lossChart: null,
-  scoreChart: null,
+export default class TrainingChart extends React.Component<{}, {}> {
+  lossChart: c3.ChartAPI;
+  scoreChart: c3.ChartAPI;
 
   componentDidMount(){
     helper.loadData(this.loadLoss, this.loadScore);
-  },
+  }
   loadLoss(columnXs, mbData){
     this.lossChart.load({
         xs: columnXs,
         columns: mbData
     });
-  },
+  }
   updateLossAxis(newRange){
     this.lossChart.axis.range(newRange);
-  },
+  }
   loadScore(columnXs, scoreData){
     this.scoreChart.load({
         xs: columnXs,
         columns: scoreData
     });
-  },
-  render: function(){
+  }
+  render(){
     return(
       <div>
         <div className="section">
@@ -32,7 +32,7 @@ var TrainingChart = React.createClass({
             (node) => {
               this.lossChart = helper.generateLossChart(node);
             }
-          } />          
+          } />
         </div>
 
         <div className="section">
@@ -46,6 +46,4 @@ var TrainingChart = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = TrainingChart;
+}

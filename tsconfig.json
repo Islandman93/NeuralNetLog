@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "allowJs": false,
+    "jsx": "react",
+    "target": "ES6",
+    "experimentalDecorators": true,
+    "outDir": "build/"
+  },
+  "compileOnSave": false,
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx",
+    "!typings/globals/**",
+    "!node_modules/**"
+  ],
+  "files": [
+    "components/network/layerdrawing/Drawing.ts",
+    "data/Checkpoints.ts",
+    "data/Parameters.ts",
+    "data/Sampling.ts",
+    "data/Training.ts",
+    "typings/index.d.ts",
+    "components/Dashboard.tsx",
+    "components/network/CheckpointCollection.tsx",
+    "components/network/DeltaLayerList.tsx",
+    "components/network/GroupedCheckpointCollection.tsx",
+    "components/network/Layer.tsx",
+    "components/network/LayerList.tsx",
+    "components/network/NetworkDashboard.tsx",
+    "components/ParameterChart.tsx",
+    "components/training/TrainingCharts.tsx",
+    "components/util/ExpandableListItem.tsx",
+    "index.tsx"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
+}

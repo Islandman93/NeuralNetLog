@@ -1,8 +1,6 @@
-var nj = require('numjs');
+import nj from 'numjs';
 
-module.exports = {drawLayer};
-
-function drawLayer(node, ndArray){
+export function drawLayer(node, ndArray){
   let arr = nj.array(ndArray);
   // conv filter
   if(arr.shape.length == 4){

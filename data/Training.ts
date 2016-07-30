@@ -1,13 +1,10 @@
-var d3 = require('d3');
-var c3 = require('c3');
-var sampling = require('./sampling');
-var $ = require('jquery');
-
-module.exports = {loadData, generateLossChart, generateScoreChart};
+import * as c3 from 'c3';
+import * as Sampling from './Sampling';
+import * as $ from 'jquery';
 
 var maxPoints = 0;
 
-function loadData(callbackLoss, callbackScore){
+export function loadData(callbackLoss, callbackScore){
   // start data get
   $.get("http://localhost:8080/stats/getlist", function(data){
       let dataList = JSON.parse(data);
@@ -15,8 +12,7 @@ function loadData(callbackLoss, callbackScore){
 
       // iterate over data and add to charts
       for(let i = 0; i < dataList.length; i++){
-          d3.json("http://localhost:8080/stats/getstat/"+dataList[i], function(error, json){
-              if (error) return console.warn(error);
+          $.get("http://localhost:8080/stats/getstat/"+dataList[i], function(json){
               let mbData = parseMinibatch(json, dataList[i]);
               let scoreData = parseScore(json, dataList[i]);
               let columnXs = {};
@@ -41,8 +37,8 @@ function parseScore(data, key){
 }
 
 function parseData(values, key, ykey){
-    let sampleInd = sampling.resevoirSampleInd(values, maxPoints);
-    let sampledValues = sampling.getArrayFromInds(values, sampleInd);
+    let sampleInd = Sampling.resevoirSampleInd(values, maxPoints);
+    let sampledValues = Sampling.getArrayFromInds(values, sampleInd);
     let y = sampledValues.map((y) => y.values[ykey]);
     let x = sampledValues.map((x) => x.step);
     // unshift to put the name infront
@@ -52,7 +48,7 @@ function parseData(values, key, ykey){
     return [x, y];
 }
 
-function generateLossChart(node){
+export function generateLossChart(node){
     var lossChart = c3.generate({
             bindto: node,
             data: {
@@ -67,7 +63,7 @@ function generateLossChart(node){
     return lossChart
 }
 
-function generateScoreChart(node){
+export function generateScoreChart(node){
     var scoreChart = c3.generate({
             bindto: node,
             data: {

@@ -1,23 +1,29 @@
-var React = require('react');
-import ListItem from 'material-ui/lib/lists/list-item';
-import KeyBoardArrowUp from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-up';
-import KeyBoardArrowDown from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-down';
+import * as React from 'react';
+import {ListItem} from 'material-ui/List';
+import KeyBoardArrowUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
+import KeyBoardArrowDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 
-var ExpandableListItem = React.createClass({
-  getInitialState(){
-    return {
-      expanded: false,
-    };
-  },
-  toggleExpanded(){
+type Props = {
+  primaryText: string,
+  expandComponent: JSX.Element
+};
+type State = {
+  expanded: boolean
+};
+export default class ExpandableListItem extends React.Component<Props, State> {
+  constructor(props: Props){
+    super(props);
+    this.state = { expanded: false };
+  }
+  toggleExpanded = () => {
     if (this.state.expanded){
       this.setState({expanded: false});
     }
     else{
       this.setState({expanded: true});
     }
-  },
-  render: function(){
+  }
+  render(){
     return(
       <div className="row" style={{marginBottom: '0px'}}>
       <ListItem
@@ -35,6 +41,4 @@ var ExpandableListItem = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = ExpandableListItem;
+}

@@ -1,4 +1,4 @@
-var resevoirSampleInd = function(arr, numPts){
+export function resevoirSampleInd(arr: Array<any>, numPts: number){
     // if sampling more than in arr return range(arr);
     if(arr.length <= numPts){
       return range(arr.length);
@@ -19,7 +19,7 @@ var resevoirSampleInd = function(arr, numPts){
     return newArr;
 }
 
-var getArrayFromInds = function(arr, inds){
+export function getArrayFromInds(arr: Array<any>, inds: Array<number>){
     let newArr = [];
     for(let i = 0; i < inds.length; i++){
         newArr.push(arr[inds[i]]);
@@ -34,5 +34,3 @@ function range(length){
   }
   return newArr;
 }
-
-module.exports = {resevoirSampleInd, getArrayFromInds};

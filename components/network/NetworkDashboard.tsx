@@ -1,28 +1,35 @@
-var React = require('react');
-var GroupedCheckpointCollection = require('./GroupedCheckpointCollection');
-var parmAPI = require('./../../data/parameters');
-var checkpointAPI = require('./../../data/checkpoints');
-var LayerList = require('./layerlist');
-var DeltaLayerList = require('./deltalayerlist');
-import List from 'material-ui/lib/lists/list';
-import ListItem from 'material-ui/lib/lists/list-item';
-import Toggle from 'material-ui/lib/toggle';
+import * as React from 'react';
+import GroupedCheckpointCollection from './GroupedCheckpointCollection';
+import * as ParmAPI from '../../data/Parameters';
+import * as CheckpointAPI from '../../data/Checkpoints';
+import LayerList from './LayerList';
+import DeltaLayerList from './DeltaLayerList';
+import {List, ListItem} from 'material-ui/List';
+import Toggle from 'material-ui/Toggle';
 
-var Component = React.createClass({
-  getInitialState(){
-    return {
+type State = {
+  groupedCheckpointList?: any[],
+  currentCheckpoint?: any,
+  compareCheckpoint?: any,
+  comparing?: boolean,
+  deltaing?: boolean
+}
+export default class Component extends React.Component<{}, State> {
+  constructor(){
+    super();
+    this.state = {
       groupedCheckpointList: [],
       currentCheckpoint: false,
       compareCheckpoint: false,
       comparing: false,
       deltaing: false
     };
-  },
+  }
   componentDidMount(){
-    checkpointAPI.getGroupedCheckpoints((groupedCheckpointList) => {this.setState({groupedCheckpointList: groupedCheckpointList})});
-  },
+    CheckpointAPI.getGroupedCheckpoints((groupedCheckpointList) => {this.setState({groupedCheckpointList})});
+  }
   checkpointClick(checkpoint){
-    parmAPI.getParm(checkpoint.weightFile, (parm) => {
+    ParmAPI.getParm(checkpoint.weightFile, (parm) => {
       checkpoint.weights = parm;
       if(!this.state.comparing){
         this.setState({currentCheckpoint: checkpoint});
@@ -31,7 +38,7 @@ var Component = React.createClass({
         this.setState({compareCheckpoint: checkpoint});
       }
     });
-  },
+  }
   toggleCompare(){
     if(this.state.comparing){
       this.setState({comparing: false});
@@ -39,7 +46,7 @@ var Component = React.createClass({
     else{
       this.setState({comparing: true});
     }
-  },
+  }
   toggleDelta(){
     if(this.state.deltaing){
       this.setState({deltaing: false});
@@ -47,8 +54,8 @@ var Component = React.createClass({
     else{
       this.setState({deltaing: true});
     }
-  },
-  render: function(){
+  }
+  render(){
     return(
       <div className="row">
         <div className="col s2 z-depth-1 grey lighten-4">
@@ -84,6 +91,4 @@ var Component = React.createClass({
       </div>
     );
   }
-});
-
-module.exports = Component;
+}
