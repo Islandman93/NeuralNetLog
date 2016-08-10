@@ -1,0 +1,14 @@
+# pycharm project
+.idea/
+
+# develop package
+*.egg-info/
+
+# pycache
+__pycache__/
+
+# example output
+examples/runs/
+
+# mnist example files
+*.gz

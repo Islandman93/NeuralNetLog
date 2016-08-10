@@ -9,7 +9,10 @@ var gutil = require('gulp-util');
 var gexit = require('gulp-exit');
 var tsify = require("tsify");
 
-gulp.task('default', () => {return tsBuild()});
+gulp.task('default', () => {
+  let browserify = createTsBrowserify();
+  return _bundle(browserify);
+});
 gulp.task('watch', () => {return tsBuild(true)});
 function tsBuild(watch){
   let watcher = watchify(createTsBrowserify());

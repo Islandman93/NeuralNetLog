@@ -1,5 +1,4 @@
 import * as $ from 'jquery';
-import * as nj from 'numjs';
 import * as c3 from 'c3';
 
 export type ParameterList = string[];
@@ -17,7 +16,7 @@ export function getParm(parmName: string, callback: (layers: ParameterType) => v
     let layers = [];
     let layerInd = 0;
     for(let wbind = 0; wbind < json.length; wbind++){
-        let arr = nj.array(json[wbind]);
+        let arr = json[wbind];
         let name = '';
         if(wbind % 2 == 0){
             name += 'w';

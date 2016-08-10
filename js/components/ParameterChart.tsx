@@ -3,7 +3,7 @@ import * as Checkpoints from '../data/Checkpoints';
 import * as c3 from 'c3';
 
 export default class ParameterChart extends React.Component<{}, {}> {
-  parameterChart: c3.ChartApi;
+  parameterChart: c3.ChartAPI;
   componentDidMount(){
     Checkpoints.loadCheckpoints(this.loadParms);
   }
