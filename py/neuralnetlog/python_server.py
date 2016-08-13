@@ -1,4 +1,3 @@
-import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import neuralnetlog.server
@@ -11,19 +10,19 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
         del path_split[0]  # remove the first '/'
 
         if path_split[0] == 'stats':
+            print('Sending Stats')
             self.wfile.write(json.dumps(stats).encode())
         elif path_split[0] == 'events':
+            print('Sending Events')
             self.wfile.write(json.dumps(events).encode())
         elif path_split[0] == 'checkpoints':
             self.wfile.write(json.dumps(checkpoints).encode())
 
 if __name__ == '__main__':
-    # dir = 'D:\\_code\\reinforcepy\\examples\\ALE\\novelty'
-    dir = 'D:\\_code\\reinforcepy\\examples\\ALE\\DQN_Async'
-    os.chdir(dir + '\\saves')
+    LOG_DIR = 'D:\\_code\\networklog\\py\\examples\\runs\\2016-Aug-08-20-58-22\\'
 
     # load the stats file list
-    events, stats, checkpoints = neuralnetlog.server.load_logs()
+    events, stats, checkpoints = neuralnetlog.server.load_logs(LOG_DIR)
 
     # Port on which server will run.
     PORT = 8080

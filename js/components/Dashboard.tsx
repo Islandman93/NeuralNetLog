@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AppBar from 'material-ui/AppBar';
-import TrainingCharts from './training/TrainingCharts';
+import EventCharts from './events/EventCharts';
 import ParameterCharts from './parameterchart';
 import NetworkDashboard from './network/NetworkDashboard';
 import {List, ListItem} from 'material-ui/List';
@@ -9,9 +9,9 @@ import Timeline from 'material-ui/svg-icons/action/timeline';
 import ActionLineStyle from 'material-ui/svg-icons/action/line-style'
 
 enum Routes {
-  Training,
-  Parameters,
-  Networks
+  Events,
+  Stats,
+  Checkpoints
 }
 type State = {
   currentRoute?: Routes
@@ -20,32 +20,32 @@ export default class Dashboard extends React.Component<{}, State> {
   constructor(){
     super();
     this.state = {
-      currentRoute: Routes.Training
+      currentRoute: Routes.Events
     };
   }
   render(){
     let mainComponent: JSX.Element = null;
     switch(this.state.currentRoute){
-      case Routes.Training:
-        mainComponent = <TrainingCharts />;
+      case Routes.Events:
+        mainComponent = <EventCharts />;
         break;
-      case Routes.Parameters:
+      case Routes.Stats:
         mainComponent = <ParameterCharts />;
         break;
-      case Routes.Networks:
+      case Routes.Checkpoints:
         mainComponent = <NetworkDashboard />;
         break;
     }
     return(
       <div>
-        <AppBar title="Neural Network Log" />
+        <AppBar title="Neural Network Log"/>
 
         <div className="row">
           <div className="col s2 z-depth-1 grey lighten-3">
             <List className="grey lighten-3">
-              <ListItem primaryText="Training" leftIcon={<Timeline />} onClick={()=>{this.setState({currentRoute: Routes.Training})}}/>
-              <ListItem primaryText="Parameters" leftIcon={<ActionGrade />} onClick={()=>{this.setState({currentRoute: Routes.Parameters})}}/>
-              <ListItem primaryText="Networks" leftIcon={<ActionLineStyle />} onClick={()=>{this.setState({currentRoute: Routes.Networks})}}/>
+              <ListItem primaryText="Events" leftIcon={<Timeline />} onClick={()=>{this.setState({currentRoute: Routes.Events})}}/>
+              <ListItem primaryText="Network Stats" leftIcon={<ActionGrade />} onClick={()=>{this.setState({currentRoute: Routes.Stats})}}/>
+              <ListItem primaryText="Network Checkpoints" leftIcon={<ActionLineStyle />} onClick={()=>{this.setState({currentRoute: Routes.Checkpoints})}}/>
             </List>
           </div>
 

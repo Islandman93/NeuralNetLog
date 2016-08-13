@@ -22,11 +22,12 @@
   "files": [
     "components/network/layerdrawing/Drawing.ts",
     "data/Checkpoints.ts",
+    "data/Events.ts",
     "data/Parameters.ts",
     "data/Sampling.ts",
-    "data/Training.ts",
     "typings/index.d.ts",
     "components/Dashboard.tsx",
+    "components/events/EventCharts.tsx",
     "components/network/CheckpointCollection.tsx",
     "components/network/DeltaLayerList.tsx",
     "components/network/GroupedCheckpointCollection.tsx",
@@ -34,7 +35,6 @@
     "components/network/LayerList.tsx",
     "components/network/NetworkDashboard.tsx",
     "components/ParameterChart.tsx",
-    "components/training/TrainingCharts.tsx",
     "components/util/ExpandableListItem.tsx",
     "index.tsx"
   ],

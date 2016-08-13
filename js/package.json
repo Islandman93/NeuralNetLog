@@ -4,7 +4,8 @@
   "description": "A package to view neural network training, weights, and results. Gives a detailed view of what your model is doing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ws": "ws"
   },
   "author": "IslandMan93",
   "license": "MIT",
@@ -12,6 +13,7 @@
     "c3": "^0.4.11",
     "d3": "^4.1.1",
     "jquery": "^3.1.0",
+    "local-web-server": "^1.2.6",
     "material-ui": "^0.15.2",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
