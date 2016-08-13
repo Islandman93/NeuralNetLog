@@ -36,6 +36,9 @@ events = Events(OUTPUT_DIR, json=True)
 stats = Stats(OUTPUT_DIR, json=True)
 checkpoints = Checkpoints(OUTPUT_DIR)  # json checkpoints are really even too large for this simple network
 
+# output initial network parameter stats
+stats.add_stats(0, lasagne.layers.get_all_param_values(l_out))
+
 # minibatch setup
 mb_size = 500  # make sure it is a factor of len of mnist train_x
 num_minibatches = X_train.shape[0] // mb_size
@@ -50,7 +53,7 @@ for epoch in range(3):
         loss, mean_activation = train(example_x, example_y)
         # calculate the epoch fraction for the current minibatch
         step = epoch + (example_ind / num_minibatches)
-        # anything you can think of can go in the event values
+        # anything you can think of can go in the event values as long as it's a number
         # I use mean activation of the hidden layer here as an example
         events.add_event(step, {'loss': loss, 'l_hid1_mean_act': mean_activation})
         # I choose not to output accuracy here as it takes a while to compute and would slow down training

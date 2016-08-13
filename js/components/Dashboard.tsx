@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AppBar from 'material-ui/AppBar';
 import EventCharts from './events/EventCharts';
-import ParameterCharts from './parameterchart';
+import StatCharts from './StatCharts';
 import NetworkDashboard from './network/NetworkDashboard';
 import {List, ListItem} from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
@@ -30,7 +30,7 @@ export default class Dashboard extends React.Component<{}, State> {
         mainComponent = <EventCharts />;
         break;
       case Routes.Stats:
-        mainComponent = <ParameterCharts />;
+        mainComponent = <StatCharts />;
         break;
       case Routes.Checkpoints:
         mainComponent = <NetworkDashboard />;

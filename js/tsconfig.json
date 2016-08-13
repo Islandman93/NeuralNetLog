@@ -23,8 +23,8 @@
     "components/network/layerdrawing/Drawing.ts",
     "data/Checkpoints.ts",
     "data/Events.ts",
-    "data/Parameters.ts",
     "data/Sampling.ts",
+    "data/Stats.ts",
     "typings/index.d.ts",
     "components/Dashboard.tsx",
     "components/events/EventCharts.tsx",
@@ -34,7 +34,7 @@
     "components/network/Layer.tsx",
     "components/network/LayerList.tsx",
     "components/network/NetworkDashboard.tsx",
-    "components/ParameterChart.tsx",
+    "components/StatCharts.tsx",
     "components/util/ExpandableListItem.tsx",
     "index.tsx"
   ],
