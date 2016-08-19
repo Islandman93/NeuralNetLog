@@ -2,6 +2,7 @@ import * as React from 'react';
 import {List} from 'material-ui/List';
 import ExpandableListItem from './../util/ExpandableListItem';
 import Layer from './Layer';
+import {Checkpoint} from '../../data/Checkpoints';
 
 type LayerType = {
   type: string,

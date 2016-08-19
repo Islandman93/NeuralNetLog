@@ -1,19 +1,14 @@
 import * as React from 'react';
 import {List} from 'material-ui/List';
 import ExpandableListItem from '../util/ExpandableListItem';
-import CheckpointCollection from './CheckpointCollection';
+import {CheckpointCollection} from './CheckpointCollection';
+import {Checkpoint, GroupedCheckpoints} from '../../data/Checkpoints';
 
 type Props = {
-  onClick: (checkpoint) => void,
-  groupedCheckpointCollection: {
-    checkpoints: any,
-    range: {
-      min: number,
-      max: number
-    }
-  }[]
+  onClick: (checkpoint: Checkpoint) => void,
+  groupedCheckpointCollection: GroupedCheckpoints[]
 };
-export default class GroupedCheckpointCollection extends React.Component<Props, {}> {
+export class GroupedCheckpointCollection extends React.Component<Props, {}> {
   render(){
     return(
       <List className="grey lighten-4">

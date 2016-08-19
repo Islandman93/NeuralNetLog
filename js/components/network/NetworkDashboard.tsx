@@ -1,6 +1,5 @@
 import * as React from 'react';
-import GroupedCheckpointCollection from './GroupedCheckpointCollection';
-// import * as ParmAPI from '../../data/Parameters';
+import {GroupedCheckpointCollection} from './GroupedCheckpointCollection';
 import * as CheckpointAPI from '../../data/Checkpoints';
 import LayerList from './LayerList';
 import DeltaLayerList from './DeltaLayerList';
@@ -8,9 +7,9 @@ import {List, ListItem} from 'material-ui/List';
 import Toggle from 'material-ui/Toggle';
 
 type State = {
-  groupedCheckpointList?: any[],
-  currentCheckpoint?: any,
-  compareCheckpoint?: any,
+  groupedCheckpointList?: CheckpointAPI.GroupedCheckpoints[],
+  currentCheckpoint?: CheckpointAPI.Checkpoint,
+  compareCheckpoint?: CheckpointAPI.Checkpoint,
   comparing?: boolean,
   deltaing?: boolean
 }
@@ -19,8 +18,8 @@ export default class Component extends React.Component<{}, State> {
     super();
     this.state = {
       groupedCheckpointList: [],
-      currentCheckpoint: false,
-      compareCheckpoint: false,
+      currentCheckpoint: null,
+      compareCheckpoint: null,
       comparing: false,
       deltaing: false
     };
@@ -28,32 +27,19 @@ export default class Component extends React.Component<{}, State> {
   componentDidMount(){
     CheckpointAPI.getGroupedCheckpoints((groupedCheckpointList) => {this.setState({groupedCheckpointList})});
   }
-  checkpointClick(checkpoint){
-    ParmAPI.getParm(checkpoint.weightFile, (parm) => {
-      checkpoint.weights = parm;
-      if(!this.state.comparing){
-        this.setState({currentCheckpoint: checkpoint});
-      }
-      else{
-        this.setState({compareCheckpoint: checkpoint});
-      }
-    });
+  checkpointClick(checkpoint: CheckpointAPI.Checkpoint){
+    if(!this.state.comparing){
+      this.setState({currentCheckpoint: checkpoint});
+    }
+    else{
+      this.setState({compareCheckpoint: checkpoint});
+    }
   }
   toggleCompare(){
-    if(this.state.comparing){
-      this.setState({comparing: false});
-    }
-    else{
-      this.setState({comparing: true});
-    }
+    this.setState({comparing: !this.state.comparing});
   }
   toggleDelta(){
-    if(this.state.deltaing){
-      this.setState({deltaing: false});
-    }
-    else{
-      this.setState({deltaing: true});
-    }
+    this.setState({deltaing: !this.state.deltaing});
   }
   render(){
     return(
@@ -69,7 +55,7 @@ export default class Component extends React.Component<{}, State> {
         </div>
         <div className={this.state.comparing ? (this.state.deltaing ? "col s3" : "col s5") : "col s10"}>
           {this.state.currentCheckpoint ?
-            <LayerList subheader={this.state.currentCheckpoint.weightFile} checkpoint={this.state.currentCheckpoint}/>
+            <LayerList subheader={this.state.currentCheckpoint.step.toString()} checkpoint={this.state.currentCheckpoint}/>
             : null
           }
         </div>

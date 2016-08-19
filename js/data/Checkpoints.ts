@@ -1,9 +1,13 @@
 import * as $ from 'jquery';
 
-// export type Checkpoint = {
-//   epoch: number,
-//   stats: [],
-// }
+export type LayerType = {
+  shape: number[],
+  values: number[]
+}
+export type Checkpoint = {
+  step: number,
+  values: {[layerName: string]: LayerType}
+}
 export function loadCheckpoints(callback){
   // start data get
   $.get("http://localhost:8080/checkpoints", function(json){
@@ -29,29 +33,34 @@ export function loadCheckpoints(callback){
   });
 }
 
-export function getSortedCheckpoints(callback){
+export function getSortedCheckpoints(callback: (checkpoints: Checkpoint[]) => void){
   // start data get
-  $.get("http://localhost:8080/checkpoints", function(json){
-    callback(json.sort(checkpointCmp));
+  $.get("http://localhost:8080/checkpoints", function(jsonStr: string){
+    let checkpointList: Checkpoint[] = JSON.parse(jsonStr);
+    callback(checkpointList.sort(checkpointCmp));
   });
 }
 
-export function getGroupedCheckpoints(callback: (checkpoints: any[]) => void){
+export function getGroupedCheckpoints(callback: (checkpoints: GroupedCheckpoints[]) => void){
   getSortedCheckpoints(_getGroupedCheckpoints(callback));
 }
 
-function _getGroupedCheckpoints(callback){
-  return function(sortedCheckpoints){
+type Range = {min: number, max: number};
+export type GroupedCheckpoints = {
+  range: Range,
+  checkpoints: Checkpoint[]
+};
+function _getGroupedCheckpoints(callback: (checkpoints: GroupedCheckpoints[]) => void){
+  return function(sortedCheckpoints: Checkpoint[]){
     // convert ranges into a sorted group 0 through <1, 1 through <2, etc
-    let groups = [];
+    let groups: GroupedCheckpoints[] = [];
     let lastStep = 0;
-    let currentGroup = [];
-    for(let i = 0; i < sortedCheckpoints.length; i++){
-      let checkpoint = sortedCheckpoints[i];
+    let currentGroup: Checkpoint[] = [];
+    sortedCheckpoints.map((checkpoint) => {
 
       // new group
-      if(checkpoint.epoch >= lastStep + 1){
-        let range = {min: lastStep, max: lastStep+1};
+      if(checkpoint.step >= lastStep + 1){
+        let range: Range = {min: lastStep, max: lastStep+1};
         groups.push({range, checkpoints: currentGroup});
         currentGroup = [];
         lastStep++;
@@ -60,12 +69,12 @@ function _getGroupedCheckpoints(callback){
       else{
         currentGroup.push(checkpoint);
       }
-    }
+    });
 
     callback(groups);
   };
 }
 
-function checkpointCmp(chk1, chk2){
-  return chk1.epoch - chk2.epoch;
+function checkpointCmp(chk1: Checkpoint, chk2: Checkpoint){
+  return chk1.step - chk2.step;
 }

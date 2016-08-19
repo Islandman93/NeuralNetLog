@@ -34,11 +34,14 @@ export default class StatCharts extends React.Component<{}, {}> {
   render(){
     return(
       <div>
-        <div ref={
-          (node) => {
-            this.statChart = this.generateChart(node);
-          }
-        } />
+        <div className="section">
+          <h5>Stats</h5>
+          <div ref={
+            (node) => {
+              this.statChart = this.generateChart(node);
+            }}
+          />
+        </div>
       </div>
     );
   }

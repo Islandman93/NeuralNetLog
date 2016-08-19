@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {List, ListItem} from 'material-ui/List';
+import {Checkpoint} from '../../data/Checkpoints';
 
 type Props = {
-  onClick: (checkpoint: any) => void,
-  checkpointCollection: any[]
+  onClick: (checkpoint: Checkpoint) => void,
+  checkpointCollection: Checkpoint[]
 };
-export default class CheckpointCollection extends React.Component<Props, {}> {
-  buildClickFn(checkpoint){
+export class CheckpointCollection extends React.Component<Props, {}> {
+  buildClickFn(checkpoint: Checkpoint){
     return () => {this.props.onClick(checkpoint)};
   }
   render(){
@@ -16,7 +17,7 @@ export default class CheckpointCollection extends React.Component<Props, {}> {
           return(
             <ListItem
               key={i}
-              primaryText={'Epoch: ' + checkpoint.epoch}
+              primaryText={'Epoch: ' + checkpoint.step}
               onClick={this.buildClickFn(checkpoint)}
             />
           );
