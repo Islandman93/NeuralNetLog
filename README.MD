@@ -11,6 +11,13 @@ To install the Python module:
 cd py
 python setup.py install  # or develop if you want to change the python code
 ```
+
+Then with Node > 6, run:
+```
+cd js
+npm install
+```
+
 Simple Usage
 ============
 The examples directory under py/ shows how to use the python API, then run the Python server with:
@@ -18,6 +25,15 @@ The examples directory under py/ shows how to use the python API, then run the P
 python python_server.py /path/to/log/dir
 ```
 
+To view the frontend
+```
+cd js
+npm run ws
+```
+
+Now you can navigate to localhost:8080 in a browser with cross origin requests enabled.
+
+Chrome: http://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome
 
 More Info
 =========
