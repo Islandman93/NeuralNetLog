@@ -53,7 +53,7 @@ class Checkpoints:
 
 def get_layer_name_from_ind(ind: int):
     # assume each layer has it's own weight and bias
-    layer_ind = int(np.ceil(ind / 2) + 1)
+    layer_ind = int(np.floor(ind / 2) + 1)
     # assume weight comes first so mod 2 == weight
     if ind % 2 == 0:
         layer_type = 'w'

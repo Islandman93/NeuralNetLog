@@ -19,7 +19,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(checkpoints).encode())
 
 if __name__ == '__main__':
-    LOG_DIR = 'D:\\_code\\networklog\\py\\examples\\runs\\2016-Aug-08-20-58-22\\'
+    LOG_DIR = 'D:\\_code\\networklog\\py\\examples\\runs\\2016-Aug-20-10-12-16\\'
 
     # load the stats file list
     events, stats, checkpoints = neuralnetlog.server.load_logs(LOG_DIR)
