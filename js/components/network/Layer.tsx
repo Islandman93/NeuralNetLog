@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as Drawing from './layerdrawing/Drawing';
+import {LayerType} from '../../data/Checkpoints';
 
 type Props = {
-  layer: any
+  layer: LayerType
 };
 export default class Layer extends React.Component<Props, {}> {
   rootNode: HTMLDivElement;

@@ -1,30 +1,30 @@
+import {LayerType} from '../../../data/Checkpoints';
 import nj from 'numjs';
 
-export function drawLayer(node, ndArray){
-  let arr = nj.array(ndArray);
+export function drawLayer(node, layer: LayerType){
   // conv filter
-  if(arr.shape.length == 4){
-      drawConv(node, arr);
+  if(layer.shape.length == 4){
+      drawConv(node, layer);
   }
   // untied conv bias
-  else if (arr.shape.length == 3){
-      drawUntiedBias(node, arr);
+  else if (layer.shape.length == 3){
+      drawUntiedBias(node, layer);
   }
   // dense
-  else if (arr.shape.length == 2){
-      drawDense(node, arr);
+  else if (layer.shape.length == 2){
+      drawDense(node, layer);
   }
   // bias
-  else if (arr.shape.length == 1){
-      drawBias(node, arr);
+  else if (layer.shape.length == 1){
+      drawBias(node, layer);
   }
 }
 
-function drawConv(node, arr){
+function drawConv(node, layer: LayerType){
   // try to get good numbers for a grid
   // http://stackoverflow.com/questions/2304052/check-if-a-number-has-a-decimal-place-is-a-whole-number
   let gridX = 0, gridY = 0;
-  let gridXY = Math.sqrt(arr.shape[0]);
+  let gridXY = Math.sqrt(layer.shape[0]);
   // not a whole number
   if(gridXY % 1 != 0){
     gridX = Math.floor(gridXY);
@@ -34,9 +34,10 @@ function drawConv(node, arr){
     gridX = gridXY;
     gridY = gridXY;
   }
-  for (let filterInd = 0; filterInd < arr.shape[0]; filterInd++){
-    for (let channelInd = 0; channelInd < arr.shape[1]; channelInd++){
-      let img = normalizeImg(arr.pick(filterInd).pick(channelInd));
+  for (let filterInd = 0; filterInd < layer.shape[0]; filterInd++){
+    for (let channelInd = 0; channelInd < layer.shape[1]; channelInd++){
+
+      let img = normalizeImg(nj.array(layer.values).pick(filterInd).pick(channelInd));
       let canv = document.createElement('canvas');
       canv.setAttribute('width', Math.pow(img.shape[0], 1.5));
       canv.setAttribute('height', Math.pow(img.shape[1], 1.5));
@@ -50,11 +51,11 @@ function drawConv(node, arr){
   }
 }
 
-function drawUntiedBias(node, arr){
+function drawUntiedBias(node, layer){
   // try to get good numbers for a grid
   // http://stackoverflow.com/questions/2304052/check-if-a-number-has-a-decimal-place-is-a-whole-number
   let gridX = 0, gridY = 0;
-  let gridXY = Math.sqrt(arr.shape[0]);
+  let gridXY = Math.sqrt(layer.shape[0]);
   // not a whole number
   if(gridXY % 1 != 0){
     gridX = Math.floor(gridXY);
@@ -64,8 +65,8 @@ function drawUntiedBias(node, arr){
     gridX = gridXY;
     gridY = gridXY;
   }
-  for (let filterInd = 0; filterInd < arr.shape[0]; filterInd++){
-    let img = normalizeImg(arr.pick(filterInd));
+  for (let filterInd = 0; filterInd < layer.shape[0]; filterInd++){
+    let img = normalizeImg(nj.array(layer.values).pick(filterInd));
     let canv = document.createElement('canvas');
     canv.setAttribute('width', img.shape[0] * 2);
     canv.setAttribute('height', img.shape[1] * 2);
@@ -78,8 +79,8 @@ function drawUntiedBias(node, arr){
   }
 }
 
-function drawDense(node, arr){
-    let img = normalizeImg(arr);
+function drawDense(node, layer){
+    let img = normalizeImg(nj.array(layer.values));
     let canv = document.createElement('canvas');
     canv.setAttribute('width', img.shape[0]);
     canv.setAttribute('height', img.shape[1]);
@@ -88,9 +89,9 @@ function drawDense(node, arr){
     node.appendChild(canv);
 }
 
-function drawBias(node, arr){
+function drawBias(node, layer){
   let div = document.createElement('div');
-  div.innerHTML = '' + arr;
+  div.innerHTML = '' + layer.values;
   node.appendChild(div);
 }
 

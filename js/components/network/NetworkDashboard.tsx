@@ -4,6 +4,8 @@ import * as CheckpointAPI from '../../data/Checkpoints';
 import LayerList from './LayerList';
 import DeltaLayerList from './DeltaLayerList';
 import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Paper from 'material-ui/Paper';
 import Toggle from 'material-ui/Toggle';
 
 type State = {
@@ -27,7 +29,7 @@ export default class Component extends React.Component<{}, State> {
   componentDidMount(){
     CheckpointAPI.getGroupedCheckpoints((groupedCheckpointList) => {this.setState({groupedCheckpointList})});
   }
-  checkpointClick(checkpoint: CheckpointAPI.Checkpoint){
+  handleCheckpointClick = (checkpoint: CheckpointAPI.Checkpoint) => {
     if(!this.state.comparing){
       this.setState({currentCheckpoint: checkpoint});
     }
@@ -35,27 +37,33 @@ export default class Component extends React.Component<{}, State> {
       this.setState({compareCheckpoint: checkpoint});
     }
   }
-  toggleCompare(){
+  handleToggleCompare = () => {
     this.setState({comparing: !this.state.comparing});
   }
-  toggleDelta(){
+  handleToggleDelta = () => {
     this.setState({deltaing: !this.state.deltaing});
   }
   render(){
     return(
       <div className="row">
-        <div className="col s2 z-depth-1 grey lighten-4">
-          <GroupedCheckpointCollection groupedCheckpointCollection={this.state.groupedCheckpointList} onClick={this.checkpointClick}/>
+        <div className="col s2">
+          <Paper zDepth={1}>
+            <GroupedCheckpointCollection groupedCheckpointCollection={this.state.groupedCheckpointList} onClick={this.handleCheckpointClick}/>
+          </Paper>
         </div>
         <div className="col s10">
-          <List subheader="Network Functions" className="grey lighten-5" zDepth={1}>
-            <ListItem primaryText="Compare" rightToggle={<Toggle onToggle={this.toggleCompare} />} />
-            {this.state.comparing ? <ListItem primaryText="Show Delta" rightToggle={<Toggle onToggle={this.toggleDelta} />} /> : null}
-          </List>
+          <Paper zDepth={1}>
+            <List className="grey lighten-5">
+              <Subheader>Network Functions</Subheader>
+              <ListItem primaryText="Compare" rightToggle={<Toggle onToggle={this.handleToggleCompare} />} />
+              {//this.state.comparing ? <ListItem primaryText="Show Delta" rightToggle={<Toggle onToggle={this.handleToggleDelta} />} /> : null}
+              }
+            </List>
+          </Paper>
         </div>
         <div className={this.state.comparing ? (this.state.deltaing ? "col s3" : "col s5") : "col s10"}>
           {this.state.currentCheckpoint ?
-            <LayerList subheader={this.state.currentCheckpoint.step.toString()} checkpoint={this.state.currentCheckpoint}/>
+            <LayerList subheader={'Step: ' + this.state.currentCheckpoint.step} checkpoint={this.state.currentCheckpoint}/>
             : null
           }
         </div>
@@ -70,7 +78,7 @@ export default class Component extends React.Component<{}, State> {
         }
         <div className={this.state.comparing ? (this.state.deltaing ? "col s3" : "col s5") : null}>
           {this.state.comparing && this.state.compareCheckpoint ?
-            <LayerList subheader={this.state.compareCheckpoint.weightFile} checkpoint={this.state.compareCheckpoint}/>
+            <LayerList subheader={'Step: ' + this.state.compareCheckpoint.step} checkpoint={this.state.compareCheckpoint}/>
             : null
           }
         </div>

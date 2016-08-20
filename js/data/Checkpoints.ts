@@ -57,6 +57,7 @@ function _getGroupedCheckpoints(callback: (checkpoints: GroupedCheckpoints[]) =>
     let lastStep = 0;
     let currentGroup: Checkpoint[] = [];
     sortedCheckpoints.map((checkpoint) => {
+      currentGroup.push(checkpoint);
 
       // new group
       if(checkpoint.step >= lastStep + 1){
@@ -64,10 +65,6 @@ function _getGroupedCheckpoints(callback: (checkpoints: GroupedCheckpoints[]) =>
         groups.push({range, checkpoints: currentGroup});
         currentGroup = [];
         lastStep++;
-      }
-      // else append to current group
-      else{
-        currentGroup.push(checkpoint);
       }
     });
 
