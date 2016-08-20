@@ -1,0 +1,13 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# js project
+node_modules/
+
+# typescript
+typings/
+
+# build
+build/

@@ -1,0 +1,1 @@
+Python package to save neural network checkpoints and serve them with an http server.

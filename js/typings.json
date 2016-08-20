@@ -1,0 +1,11 @@
+{
+  "globalDependencies": {
+    "c3": "registry:dt/c3#0.0.0+20160608082756",
+    "d3": "registry:dt/d3#0.0.0+20160628065019",
+    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "lodash": "registry:dt/lodash#4.14.0+20160802150749",
+    "material-ui": "registry:dt/material-ui#0.15.1+20160720000941",
+    "react": "registry:dt/react#0.14.0+20160720060442",
+    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+  }
+}
